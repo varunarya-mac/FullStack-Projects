@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta15
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./Infra/k8s/auth-depl.yaml
+build:
+  artifacts:
+    - image: aryanvarun/auth
+      context: Src/Auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src**/*.ts'
+            dest: .
+  local:
+    push: false
+
