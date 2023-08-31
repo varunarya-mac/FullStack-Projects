@@ -1,31 +1,20 @@
-// create express server, port 3000, and body-parser middleware
-const express = require('express');
-require('express-async-errors');
-const bodyParser = require('body-parser');
-const app = express();
+import mongoose from "mongoose";
+import { app } from "./app";
+
 const port = 3000;
 
-import { currentUserRouter } from "./routes/current-user";
-import { signinRouter } from "./routes/signin";
-import { signoutRouter } from "./routes/signout";
-import { signupRouter } from "./routes/signup";
-import errorhandler from "./middleware/error-handler";
+const start = async () => {
+    if (!process.env.JWT_KEY) {
+        throw new Error('JWT_KEY must be defined');
+    }
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+        console.log('Connected to MongoDB');
+    } catch (err) {
+        console.error(err);
+    }
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+    app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+}
 
-// parse application/json
-app.use(bodyParser.json())
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
-
-app.all('*', async () => {
-    throw new Error('Route not found');
-});
-
-app.use(errorhandler);
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+start();

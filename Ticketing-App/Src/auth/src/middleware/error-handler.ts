@@ -9,7 +9,6 @@ const errorhandler = (
   next: NextFunction
 ) => {
   if (err instanceof CustomError) {
-    
     return res.status(err.statusCode).send({ errors: err.serializeErrors() });
   } 
 
