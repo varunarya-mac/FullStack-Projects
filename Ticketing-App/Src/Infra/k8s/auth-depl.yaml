@@ -15,6 +15,17 @@ spec:
       containers:
         - name: auth
           image: aryanvarun/auth
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_URI
 ---
 # Path: Src/Infra/k8s/auth-srv.yaml
 apiVersion: v1
