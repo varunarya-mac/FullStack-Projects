@@ -7,7 +7,7 @@ import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
-import errorhandler from "./middleware/error-handler";
+import errorhandler, { NotFound } from "@va-ticketing/common";
 
 import cookieSession from "cookie-session";
 

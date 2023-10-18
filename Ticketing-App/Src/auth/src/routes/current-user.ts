@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { currentUser } from "../middleware/current-user";
+import { currentUser } from "@va-ticketing/common";
 const route = express.Router();
 
 route.get("/api/users/currentuser", currentUser, (req, res) => {
