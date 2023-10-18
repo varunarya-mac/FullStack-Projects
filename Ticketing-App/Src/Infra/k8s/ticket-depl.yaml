@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: ticket-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: ticket
   template:
     metadata:
       labels:
-        app: auth
+        app: ticket
     spec:
       containers:
-        - name: auth
-          image: aryanvarun/auth
+        - name: ticket
+          image: aryanvarun/ticket
           env:
             - name: JWT_KEY
               valueFrom:
@@ -22,18 +22,18 @@ spec:
                   name: jwt-secret
                   key: JWT_KEY
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://ticket-mongo-srv:27017/ticket'
 ---
 # Path: Src/Infra/k8s/auth-srv.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: ticket-srv
 spec:
   selector:
-    app: auth
+    app: ticket
   ports:
-    - name: auth
+    - name: ticket
       protocol: TCP
       port: 3000
       targetPort: 3000
